@@ -57,11 +57,11 @@
                             orderIdList[i] = boughtItem[i].id;
                         }
                         //unduplicate order IDs
-                        orderIdList = [...new Set(orderIdList)];
+                       orderIdList = [...new Set(orderIdList)];
                         var temp;
                         var size = orderIdList.length;
                         //sort order ID in ascending order
-                        for (i = 0; i < size - 1; i++) {
+                         for (i = 0; i < size - 1; i++) {
                             for (j = 0; j < size - i - 1; j++) {
                                 if (orderIdList[j] > orderIdList[j+1]) {
                                     temp = orderIdList[j];
@@ -70,15 +70,21 @@
                                 }
                             }
                         }
-                                         
-                            htmlTxt += '<h5>Order #' + (1) + '</h5>';
-                            var counter = 0;
+                        console.log(orderIdList);
+                        console.log(boughtItem);
+                        for (p = 0; p < orderIdList.length; p++){
+                            var checkID = orderIdList[p];
+                            htmlTxt += '<h5>Order #' + (p+1) + '</h5>';
                             //get bought items by order ID
+                            var counter = 0; 
                             for (j = 0; j < boughtItem.length; j++) {
-                            
-                                if(boughtItem[j].id == orderIdList[0]) {
+                                
+                                if(boughtItem[j].id == checkID) {
                                     var item = boughtItem[j];
+                                    console.log(boughtItem[j].id,checkID);
+                                    //console.log(item)
                                     //display top level info
+                                    //console.log(j+" J ")
                                     if(counter == 0) {
                                         let options = {
                                             weekday: "long", year: "numeric", month: "long",  
@@ -94,11 +100,13 @@
                                             <h6>Postal Code: ' + item.postalCode + '</h6>\
                                             <h6>Name: ' + item.customerName + '</h6>\
                                             <h6>Contact Number: ' + item.phone + '</h6>';
-                                        counter++;
+                                            counter++;
                                     }
                                 }
+                                
                             }
                             //display table info
+                            
                             htmlTxt += '\
                                 <div class="row">\
                                     <div class="col-md-12">\
@@ -118,9 +126,11 @@
                                                             </thead>\
                                                             <tbody>';
                             for (y = 0; y < boughtItem.length; y++) {
-                            
-                                if (boughtItem[y].id == orderIdList[0]) {
+                                if (boughtItem[y].id == checkID) {
                                     var product = boughtItem[y];
+                                    console.log(orderIdList)
+                                    console.log(product);
+                                    //console.log( y +" Y ")
                                     htmlTxt += '\
                                         <tr class="cart_table_item">\
                                             <td class="product-thumbnail">\
@@ -142,7 +152,7 @@
                                     finalPrice += product.retailPrice.toFixed(2) * product.quantity;
                                     overallPrice += product.retailPrice.toFixed(2) * product.quantity;
                                 }
-                            }
+                        }
                             htmlTxt += '\
                                                                 <tr>\
                                                                     <td></td>\
@@ -162,10 +172,10 @@
                                     </div>\
                                 </div>';
                             finalPrice = 0;
-
+                            }
                         htmlTxt += '<h4 style="font-weight: bold; padding-left: 20px">Total Amount Spent: $'+ overallPrice + '</h4>';
                         document.getElementById("salesHistoryTab").innerHTML = htmlTxt;
-                    }
+                        }
                 }).catch(function(error) {
                     console.log(error);
                 });
@@ -636,6 +646,7 @@
                                 <div id="salesHistory" class="tab-pane">
                                     <h4>Sales History</h4>
                                     <div id="salesHistoryTab"></div>
+
                                 </div>
                             </div>
                         </div>
